@@ -24,10 +24,10 @@ def geocode_addresses(input_file, output_file, api_key):
         gmaps = googlemaps.Client(key=api_key)
         
         # read input file
-        df = pd.read_excel(input_file)
+        df = pd.read_csv(input_file)
         
         # ensure the 'addr' column exists
-        if 'addr' not in df.columns:
+        if 'Address' not in df.columns:
             raise ValueError("the input file does not contain the 'addr' column")
         
         # create new latitude and longitude columns
@@ -38,24 +38,24 @@ def geocode_addresses(input_file, output_file, api_key):
         for index, row in tqdm(df.iterrows(), total=len(df), desc="processing addresses"):
             try:
                 # get the latitude and longitude
-                geocode_result = gmaps.geocode(row['addr'])
+                geocode_result = gmaps.geocode(row['Address'])
                 
                 if geocode_result and len(geocode_result) > 0:
                     location = geocode_result[0]['geometry']['location']
                     df.at[index, 'lat'] = location['lat']
                     df.at[index, 'lgt'] = location['lng']
                 else:
-                    print(f"warning: can't find the latitude and longitude for the address: {row['addr']}")
+                    print(f"warning: can't find the latitude and longitude for the address: {row['Address']}")
                 
                 # add delay to comply with API limits
                 time.sleep(0.1)
                 
             except Exception as e:
-                print(f"error when processing the address: {row['addr']}: {str(e)}")
+                print(f"error when processing the address: {row['Address']}: {str(e)}")
                 continue
         
         # save the results to a new Excel file
-        df.to_excel(output_file, index=False)
+        df.to_csv(output_file, index=False)
         print(f"processing completed! the results have been saved to {output_file}")
         
     except Exception as e:
