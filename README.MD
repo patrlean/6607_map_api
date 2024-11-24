@@ -24,14 +24,14 @@ pip install -r requirements.txt
 ## Configuration
 Configure the `config.py` file before use:
 - `GOOGLE_MAPS_API_KEY`: Your Google Maps API key
-- `INPUT_FILE`: Path to input Excel file (default is "addr.xlsx")
-- `OUTPUT_FILE`: Path to output Excel file (default is "addr_lat_lgt.xlsx")
+- `INPUT_FILE`: Path to input CSV file (default is "addr.csv")
+- `OUTPUT_FILE`: Path to output CSV file (default is "addr_lat_lgt.csv")
 
 ## Input File Format
-The input Excel file must contain a column named `addr` which contains the addresses to be converted.
+The input CSV file must contain a column named `Address` which contains the addresses to be converted.
 
 ## Usage
-1. Prepare an Excel file containing address information
+1. Prepare a CSV file containing address information
 2. Configure the `config.py` file
 3. Run the program:
    ```bash
